@@ -1,0 +1,12 @@
+version: 3
+
+dotenv: [".env"]
+
+tasks:
+  tasks:
+    cmds:
+      - go run ./cmd/tasks
+
+  server:
+    cmds:
+      - go run ./cmd/server

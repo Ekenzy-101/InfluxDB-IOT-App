@@ -1,0 +1,32 @@
+### Generate Devices Measurements
+POST http://localhost:5000/devices/generate
+Content-Type: application/json
+
+{
+  "deviceIds": ["test"]
+}
+
+### Get Device Measurements
+POST http://localhost:5000/devices/test/measurements
+Accept: text/csv
+Content-Type: application/json
+
+{
+  "query": "from(bucket: \"iot_center\")\n         |> range(start: -60d)\n         |> filter(fn: (r) => r._measurement == \"environment\" and r.deviceId == \"test\" )\n         |> filter(fn: (r) => r._field == \"humidity\" )\n         |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n         |> yield(name: \"mean\")\n         "
+}
+
+### Get Devices
+GET http://localhost:5000/devices
+Content-Type: application/json
+
+### Get Device
+GET http://localhost:5000/devices/test
+Content-Type: application/json
+
+### Create Device
+POST http://localhost:5000/devices
+Content-Type: application/json
+
+{
+  "deviceId": "test"
+}
